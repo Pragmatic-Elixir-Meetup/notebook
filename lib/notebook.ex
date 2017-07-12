@@ -1,17 +1,5 @@
 defmodule Notebook do
-  @moduledoc """
-  Documentation for Notebook.
-  """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Notebook.hello
-      :world
-
-  """
   alias Notebook.{NoteSup, NoteServer}
 
   def save(user_id, content) do
