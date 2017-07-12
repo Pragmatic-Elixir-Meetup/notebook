@@ -18,21 +18,21 @@ defmodule Notebook.NoteServer do
   end
 
   def init(user_id) do
-    {:ok, {user_id, load_from_ets(user_id)}}
+    {:ok, user_id}
   end
 
-  def handle_call({:save, content}, _from, {user_id, _}) do
+  def handle_call({:save, content}, _from, user_id) when is_binary(content) do
     save_to_ets(user_id, content)
     {:reply,
       :ok,
-      {user_id, content}
+      user_id
     }
   end
 
-  def handle_call(:load, _from, {_, content}=state) do
+  def handle_call(:load, _from, user_id) do
     {:reply,
-      {:ok, content},
-      state
+      {:ok, load_from_ets(user_id)},
+      user_id
     }
   end
 
