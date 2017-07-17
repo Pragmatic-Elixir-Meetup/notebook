@@ -10,7 +10,7 @@ Notebook.new "Joe"
 Notebook.save "Joe", "hello world"
 ```
 
-- read note
+- load note
 ```
-Notebook.read "Joe"
+Notebook.load "Joe"
 ```
