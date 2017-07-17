@@ -1,21 +1,16 @@
 # Notebook
 
-**TODO: Add description**
-
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `notebook` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:notebook, "~> 0.1.0"}
-  ]
-end
+- new note
+```
+Notebook.new "Joe"
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/notebook](https://hexdocs.pm/notebook).
+- save note
+```
+Notebook.save "Joe", "hello world"
+```
 
+- read note
+```
+Notebook.read "Joe"
+```
