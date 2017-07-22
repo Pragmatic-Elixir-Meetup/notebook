@@ -1,19 +1,21 @@
 defmodule Notebook do
 
-  alias Notebook.{NoteSup, NoteServer}
+  alias Notebook.{NoteSup, Registry}
 
-  @type user_id :: String.t | integer
-  @type content :: String.t
+  # alias Notebook.{NoteSup, NoteServer}
 
-  @spec save(user_id, content) :: :ok
-  def save(user_id, content) do
-    NoteServer.save(user_id, content)
-  end
+  # @type user_id :: String.t | integer
+  # @type content :: String.t
 
-  @spec load(user_id) :: content
-  def load(user_id) do
-    NoteServer.load(user_id)
-  end
+  # @spec save(user_id, content) :: :ok
+  # def save(user_id, content) do
+  #   NoteServer.save(user_id, content)
+  # end
+
+  # @spec load(user_id) :: content
+  # def load(user_id) do
+  #   NoteServer.load(user_id)
+  # end
 
   @spec new(user_id) :: Supervisor.on_start_child
   def new(user_id) do
@@ -25,8 +27,16 @@ defmodule Notebook do
     Supervisor.count_children(NoteSup)
   end
 
-  @spec service_name(term) :: Registry.key
-  def service_name(service_id) do
-    {:via, Registry, {Notebook.Registry, service_id}}
+  def save(user_id, content) do
+    Registry.service_name(user_id) |> GenServer.call({:save, content})
   end
+
+  def load(user_id) do
+    Registry.service_name(user_id) |> GenServer.call(:load)
+  end
+
+  # @spec service_name(term) :: Registry.key
+  # def service_name(service_id) do
+  #   {:via, Registry, {Notebook.Registry, service_id}}
+  # end
 end
