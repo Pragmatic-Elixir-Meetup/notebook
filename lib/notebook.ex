@@ -1,11 +1,11 @@
 defmodule Notebook do
 
   alias Notebook.{NoteSup, Registry}
-
+  
   # alias Notebook.{NoteSup, NoteServer}
 
-  # @type user_id :: String.t | integer
-  # @type content :: String.t
+  @type user_id :: String.t | integer
+  @type content :: String.t
 
   # @spec save(user_id, content) :: :ok
   # def save(user_id, content) do
@@ -28,11 +28,13 @@ defmodule Notebook do
   end
 
   def save(user_id, content) do
-    Registry.service_name(user_id) |> GenServer.call({:save, content})
+    Registry.service_name({Notebook.NoteServer, user_id}) 
+    |> GenServer.call({:save, content})
   end
 
   def load(user_id) do
-    Registry.service_name(user_id) |> GenServer.call(:load)
+    Registry.service_name({Notebook.NoteServer, user_id}) 
+    |> GenServer.call(:load)
   end
 
   # @spec service_name(term) :: Registry.key
