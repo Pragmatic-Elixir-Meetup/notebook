@@ -1,7 +1,7 @@
 defmodule Notebook.NoteServer do
   use GenServer
 
-  alias Notebook.{Impl, Registry}
+  alias Notebook.Impl
 
   # Apis
 
@@ -13,16 +13,18 @@ defmodule Notebook.NoteServer do
   #   GenServer.call(service_name(user_id), :load)
   # end
 
-
-  # Callbacks
-
   def start_link(_, user_id) do
+    import Notebook.Registry, only: [service_name: 1]
+
     GenServer.start_link(
       __MODULE__,
       user_id,
-      name: service_name(user_id)
+      name: service_name({__MODULE__, user_id})
     )
   end
+
+
+  # Callbacks
 
   def init(user_id) do
     {:ok, user_id}
@@ -39,8 +41,8 @@ defmodule Notebook.NoteServer do
     { :reply, {:ok, response}, user_id }
   end
 
-  defp service_name(user_id), do:
-    Registery.service_name({__MODULE__, user_id})
+  # defp service_name(user_id), do:
+  #   Registry.service_name({__MODULE__, user_id})
 
   # defp load_from_ets(user_id) do
   #   :ets.lookup_element :notebook, user_id, 2
