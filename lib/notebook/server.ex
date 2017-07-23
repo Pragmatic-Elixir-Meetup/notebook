@@ -1,7 +1,7 @@
 defmodule Notebook.Server do
   use GenServer
 
-  alias Notebook.Impl
+  alias Notebook.Note
 
   # Apis
 
@@ -31,13 +31,13 @@ defmodule Notebook.Server do
   end
 
   def handle_call({:save, content}, _from, user_id) when is_binary(content) do
-    Impl.insert(user_id, content)
+    Note.insert(user_id, content)
 
     { :reply, :ok, user_id }
   end
 
   def handle_call(:load, _from, user_id) do
-    response = Impl.lookup_element(user_id)
+    response = Note.lookup_element(user_id)
     { :reply, {:ok, response}, user_id }
   end
 

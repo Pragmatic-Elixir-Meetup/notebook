@@ -1,4 +1,4 @@
-defmodule Notebook.Impl do
+defmodule Notebook.Note do
 
   @est_server :notebook
 

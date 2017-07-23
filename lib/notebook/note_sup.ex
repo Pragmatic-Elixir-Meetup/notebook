@@ -1,6 +1,6 @@
 defmodule Notebook.NoteSup do
   use Supervisor
-  alias Notebook.{Server, Impl}
+  alias Notebook.{Server, Note}
 
   def start_link(arg) do
     Supervisor.start_link(__MODULE__, arg, name: __MODULE__)
@@ -11,7 +11,7 @@ defmodule Notebook.NoteSup do
       Supervisor.init([
         Server
       ], strategy: :simple_one_for_one)
-    Impl.new()
+    Note.new()
     r
   end
 
