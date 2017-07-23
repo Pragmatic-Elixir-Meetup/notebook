@@ -1,7 +1,8 @@
 defmodule Notebook do
 
-  alias Notebook.{NoteSup, Registry}
+  alias Notebook.{NoteSup, Server}
   
+  import Notebook.Registry, only: [service_name: 1]
   # alias Notebook.{NoteSup, NoteServer}
 
   @type user_id :: String.t | integer
@@ -28,12 +29,12 @@ defmodule Notebook do
   end
 
   def save(user_id, content) do
-    Registry.service_name({Notebook.NoteServer, user_id}) 
+    service_name({Server, user_id}) 
     |> GenServer.call({:save, content})
   end
 
   def load(user_id) do
-    Registry.service_name({Notebook.NoteServer, user_id}) 
+    service_name({Server, user_id}) 
     |> GenServer.call(:load)
   end
 

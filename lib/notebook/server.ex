@@ -1,4 +1,4 @@
-defmodule Notebook.NoteServer do
+defmodule Notebook.Server do
   use GenServer
 
   alias Notebook.Impl
